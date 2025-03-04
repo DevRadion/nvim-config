@@ -1,12 +1,12 @@
 return {
 	{
 		"ellisonleao/gruvbox.nvim",
-		priority = 1000, -- Make sure to load this before all the other start plugins.
+		priority = 1000,
 		config = function()
 			---@diagnostic disable-next-line: missing-fields
 			require("gruvbox").setup({
 				styles = {
-					terminal_colors = true, -- add neovim terminal colors
+					terminal_colors = true,
 					undercurl = true,
 					underline = true,
 					bold = true,
