@@ -1,4 +1,0 @@
-# 💤 RadikVim
-
-My neovim config
-
