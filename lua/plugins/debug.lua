@@ -41,7 +41,7 @@ return {
 			desc = "Debug: Step Out",
 		},
 		{
-			"<leader>b",
+			"<C-b>",
 			function()
 				require("dap").toggle_breakpoint()
 			end,
@@ -67,6 +67,10 @@ return {
 		local dap = require("dap")
 		local dapui = require("dapui")
 
+		require("lazydev").setup({
+			library = { "nvim-dap-ui" },
+		})
+
 		require("mason-nvim-dap").setup({
 			-- Makes a best effort to setup the various debuggers with
 			-- reasonable debug configurations
@@ -83,23 +87,7 @@ return {
 
 		-- Dap UI setup
 		-- For more information, see |:help nvim-dap-ui|
-		dapui.setup({
-			-- Set icons to characters that are more likely to work in every terminal.
-			icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
-			controls = {
-				icons = {
-					pause = "⏸",
-					play = "▶",
-					step_into = "⏎",
-					step_over = "⏭",
-					step_out = "⏮",
-					step_back = "b",
-					run_last = "▶▶",
-					terminate = "⏹",
-					disconnect = "⏏",
-				},
-			},
-		})
+		dapui.setup()
 
 		-- Change breakpoint icons
 		vim.api.nvim_set_hl(0, "DapBreak", { fg = "#e51400" })
