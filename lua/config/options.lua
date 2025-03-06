@@ -1,21 +1,21 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.opt.cmdheight = 0
-
 vim.g.have_nerd_font = true
+
 vim.opt.relativenumber = true
+vim.opt.number = true
+
+vim.opt.showmode = false
 vim.opt.showcmd = true
 
 vim.opt.mouse = "a"
-
-vim.opt.showmode = false
 
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 
 vim.opt.shiftwidth = 4
 vim.opt.showtabline = 2
--- vim.opt.smarttab = true
+vim.opt.smarttab = true
 vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
 vim.opt.expandtab = true
