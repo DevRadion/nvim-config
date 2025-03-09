@@ -10,7 +10,6 @@ vim.opt.autoindent = true
 vim.opt.smartindent = true
 
 vim.opt.shiftwidth = 4
-vim.opt.showtabline = 2
 vim.opt.smarttab = true
 vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
@@ -60,3 +59,4 @@ vim.opt.inccommand = "split"
 vim.opt.cursorline = true
 
 vim.opt.scrolloff = 10
+vim.lsp.inlay_hint.enable(true, nil)
