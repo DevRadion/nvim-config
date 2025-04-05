@@ -192,9 +192,43 @@ local config = function()
 	-- for you, so that they are available from within Neovim.
 	local ensure_installed = vim.tbl_keys(servers or {})
 	vim.list_extend(ensure_installed, {
-		"stylua", -- Used to format Lua code
+		"stylua",
+		"emmet_ls",
 	})
+
+	local lspconfig = require("lspconfig")
 	require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+	require("lspconfig").sourcekit.setup({})
+	require("lspconfig").ts_ls.setup({})
+	local emmet_capabilities = vim.lsp.protocol.make_client_capabilities()
+	capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+	lspconfig.emmet_ls.setup({
+		-- on_attach = on_attach,
+		capabilities = emmet_capabilities,
+		filetypes = {
+			"css",
+			"eruby",
+			"html",
+			"javascript",
+			"javascriptreact",
+			"less",
+			"sass",
+			"scss",
+			"svelte",
+			"pug",
+			"typescriptreact",
+			"vue",
+		},
+		init_options = {
+			html = {
+				options = {
+					-- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+					["bem.enabled"] = true,
+				},
+			},
+		},
+	})
 
 	require("mason-lspconfig").setup({
 		ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)

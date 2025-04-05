@@ -30,6 +30,9 @@ return {
 				"vimdoc",
 				"zig",
 				"rust",
+				"swift",
+				"typescript",
+				"javascript",
 			},
 			-- Autoinstall languages that are not installed
 			auto_install = true,
