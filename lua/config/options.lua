@@ -61,7 +61,27 @@ vim.o.completeopt = "menu,noinsert,popup,fuzzy"
 
 vim.opt.scrolloff = 10
 vim.lsp.inlay_hint.enable(true, nil)
+
+local sign_icon = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 vim.diagnostic.config({
 	virtual_text = true,
 	virtual_lines = { current_line = true },
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = sign_icon.Error,
+			[vim.diagnostic.severity.WARN] = sign_icon.Warn,
+			[vim.diagnostic.severity.INFO] = sign_icon.Info,
+			[vim.diagnostic.severity.HINT] = sign_icon.Hint,
+		},
+	},
+	float = {
+		border = "rounded",
+		format = function(d)
+			return ("%s (%s) [%s]"):format(d.message, d.source, d.code or d.user_data.lsp.code)
+		end,
+	},
+	underline = true,
+	jump = {
+		float = true,
+	},
 })

@@ -1,67 +1,161 @@
-return {
-	"hrsh7th/nvim-cmp",
-	event = "InsertEnter",
-	dependencies = {
-		"hrsh7th/cmp-buffer", -- source for text in buffer
-		"hrsh7th/cmp-path", -- source for file system paths
-		{
-			"L3MON4D3/LuaSnip",
-			-- install jsregexp (optional!).
-			build = "make install_jsregexp",
+---@diagnostic disable: undefined-field
+local source_mapping = {
+	nvim_lsp = "[LSP]",
+	nvim_lua = "[LUA]",
+	luasnip = "[SNIP]",
+	buffer = "[BUF]",
+	path = "[PATH]",
+	treesitter = "[TREE]",
+	["vim-dadbod-completion"] = "[DB]",
+}
+
+local config = function()
+	local cmp = require("cmp")
+	local lspkind = require("lspkind")
+	local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+	local cmp_tailwind = require("cmp-tailwind-colors")
+	local autocomplete_group = vim.api.nvim_create_augroup("dadbod-autocomplete", { clear = true })
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = { "sql", "mysql", "plsql" },
+		callback = function()
+			cmp.setup.buffer({ sources = { { name = "vim-dadbod-completion" } } })
+		end,
+		group = autocomplete_group,
+	})
+
+	cmp.setup({
+		enabled = function()
+			return require("util.cmp").is_enabled()
+		end,
+		preselect = cmp.PreselectMode.Item,
+		keyword_length = 2,
+		snippet = {
+			expand = function(args)
+				require("luasnip").lsp_expand(args.body)
+			end,
 		},
-		"saadparwaiz1/cmp_luasnip", -- for autocompletion
-		"rafamadriz/friendly-snippets", -- useful snippets
-		"onsails/lspkind.nvim", -- vs-code like pictograms
-	},
-	config = function()
-		local cmp = require("cmp")
-
-		local luasnip = require("luasnip")
-
-		local lspkind = require("lspkind")
-
-		-- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
-		require("luasnip.loaders.from_vscode").lazy_load()
-
-		cmp.setup({
-			completion = {
-				completeopt = "menu,menuone,preview,noselect",
+		window = {
+			completion = cmp.config.window.bordered(),
+			documentation = cmp.config.window.bordered(),
+		},
+		view = {
+			entries = {
+				name = "custom",
+				selection_order = "near_cursor",
+				follow_cursor = true,
 			},
-			window = {
-				documentation = cmp.config.window.bordered(),
-				completion = cmp.config.window.bordered({
-					winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+		},
+		mapping = {
+			["<CR>"] = cmp.mapping(
+				cmp.mapping.confirm({
+					select = true,
+					behavior = cmp.ConfirmBehavior.Insert,
 				}),
-			},
-			snippet = { -- configure how nvim-cmp interacts with snippet engine
-				expand = function(args)
-					luasnip.lsp_expand(args.body)
+				{ "i", "c" }
+			),
+			["<C-n>"] = cmp.mapping.select_next_item({
+				behavior = cmp.ConfirmBehavior.Insert,
+			}),
+			["<C-p>"] = cmp.mapping.select_prev_item({
+				behavior = cmp.ConfirmBehavior.Insert,
+			}),
+			["<C-b>"] = cmp.mapping.scroll_docs(-5),
+			["<C-f>"] = cmp.mapping.scroll_docs(5),
+			["<C-e>"] = cmp.mapping.abort(),
+		},
+		sources = cmp.config.sources({
+			{
+				name = "luasnip",
+				group_index = 1,
+				option = { use_show_condition = true },
+				entry_filter = function()
+					local context = require("cmp.config.context")
+					return not context.in_treesitter_capture("string") and not context.in_syntax_group("String")
 				end,
 			},
-			mapping = cmp.mapping.preset.insert({
-				["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-				["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
-				["<C-b>"] = cmp.mapping.scroll_docs(-4),
-				["<C-f>"] = cmp.mapping.scroll_docs(4),
-				["<C-l>"] = cmp.mapping.complete(), -- show completion suggestions
-				["<C-e>"] = cmp.mapping.abort(), -- close completion window
-				["<CR>"] = cmp.mapping.confirm({ select = true }),
-			}),
-			-- sources for autocompletion
-			sources = cmp.config.sources({
-				{ name = "nvim_lsp" },
-				{ name = "luasnip" }, -- snippets
-				{ name = "buffer" }, -- text within current buffer
-				{ name = "path" }, -- file system paths
-			}),
-
-			-- configure lspkind for vs-code like pictograms in completion menu
-			formatting = {
-				format = lspkind.cmp_format({
-					maxwidth = 50,
-					ellipsis_char = "...",
-				}),
+			{
+				name = "nvim_lsp",
+				group_index = 2,
 			},
-		})
-	end,
+			{
+				name = "nvim_lua",
+				group_index = 3,
+			},
+			{
+				name = "treesitter",
+				keyword_length = 4,
+				group_index = 4,
+			},
+			{
+				name = "path",
+				keyword_length = 4,
+				group_index = 4,
+			},
+			{
+				name = "buffer",
+				keyword_length = 3,
+				group_index = 5,
+				option = {
+					get_bufnrs = function()
+						local bufs = {}
+						for _, win in ipairs(vim.api.nvim_list_wins()) do
+							bufs[vim.api.nvim_win_get_buf(win)] = true
+						end
+						return vim.tbl_keys(bufs)
+					end,
+				},
+			},
+			{
+				name = "lazydev",
+				keyword_length = 2,
+				group_index = 0,
+			},
+		}),
+		---@diagnostic disable-next-line: missing-fields
+		formatting = {
+			format = lspkind.cmp_format({
+				mode = "symbol_text",
+				ellipsis_char = "...",
+				before = function(entry, item)
+					cmp_tailwind.format(entry, item)
+					return item
+				end,
+				menu = source_mapping,
+			}),
+		},
+		sorting = {
+			priority_weight = 2,
+			comparators = {
+				cmp.config.compare.offset,
+				cmp.config.compare.exact,
+				cmp.config.compare.score,
+				cmp.config.compare.recently_used,
+				cmp.config.compare.kind,
+				cmp.config.compare.sort_text,
+				cmp.config.compare.length,
+				cmp.config.compare.order,
+			},
+		},
+	})
+	cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+end
+
+return {
+	"hrsh7th/nvim-cmp",
+	config = config,
+	event = "InsertEnter",
+	dependencies = {
+		"hrsh7th/cmp-nvim-lsp",
+		dependencies = {
+			"L3MON4D3/LuaSnip",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-nvim-lua",
+			"ray-x/cmp-treesitter",
+			"saadparwaiz1/cmp_luasnip",
+			"roobert/tailwindcss-colorizer-cmp.nvim",
+			"js-everts/cmp-tailwind-colors",
+			"onsails/lspkind.nvim",
+		},
+	},
 }
