@@ -65,7 +65,6 @@ vim.lsp.inlay_hint.enable(true, nil)
 local sign_icon = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 vim.diagnostic.config({
 	virtual_text = true,
-	virtual_lines = { current_line = true },
 	signs = {
 		text = {
 			[vim.diagnostic.severity.ERROR] = sign_icon.Error,

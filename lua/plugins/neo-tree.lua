@@ -7,8 +7,9 @@ return {
 	},
 	lazy = false, -- neo-tree will lazily load itself
 	opts = {
+		popup_border_style = "",
 		filesystem = {
-			follow_current_file = { enabled = true },
+			follow_current_file = { enabled = true, leave_dirs_open = true },
 			use_libuv_file_watcher = true,
 		},
 		window = {
