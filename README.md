@@ -58,3 +58,5 @@ Clone this repo into your Neovim configuration directory:
 
 ```bash
 git clone https://github.com/DevRadion/nvim-config ~/.config/nvim
+```
+Requires Neovim 0.11+
