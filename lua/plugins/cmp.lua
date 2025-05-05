@@ -9,6 +9,7 @@ return {
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-nvim-lua",
 		"saadparwaiz1/cmp_luasnip",
+		"rafamadriz/friendly-snippets",
 		"ray-x/cmp-treesitter",
 		"L3MON4D3/LuaSnip",
 
@@ -24,6 +25,7 @@ return {
 		local lspkind = require("lspkind")
 		local cmp_tailwind = require("cmp-tailwind-colors")
 		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+		require("luasnip.loaders.from_vscode").lazy_load()
 
 		-- Map source to label
 		local source_mapping = {

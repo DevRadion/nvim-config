@@ -9,7 +9,7 @@ return {
 			typescript = { "biomejs" },
 			javascriptreact = { "biomejs" },
 			typescriptreact = { "biomejs" },
-			svelte = { "eslint_d" },
+			svelte = { "biomejs" },
 			python = { "pylint" },
 		}
 
