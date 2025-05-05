@@ -42,6 +42,9 @@ return {
 		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 		cmp.setup({
+			experimental = {
+				ghost_text = true,
+			},
 			enabled = function()
 				return vim.api.nvim_get_option_value("buftype", { buf = 0 }) ~= "prompt"
 			end,

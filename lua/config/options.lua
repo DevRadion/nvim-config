@@ -1,6 +1,9 @@
 vim.opt.relativenumber = true
 vim.opt.number = true
 
+vim.opt.title = true
+vim.opt.cmdheight = 1
+
 vim.opt.showmode = false
 vim.opt.showcmd = true
 
