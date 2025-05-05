@@ -6,7 +6,6 @@ A modern and minimalist Neovim setup tailored for **TypeScript**, **TailwindCSS*
 
 ## ✨ Features
 
-- Full **LSP** (Language Server Protocol) support
 - **Treesitter** syntax highlighting and text objects
 - **Autocompletion** (nvim-cmp) with snippet support
 - **Neo-tree** file explorer
