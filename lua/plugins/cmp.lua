@@ -4,6 +4,7 @@ return {
 	event = "InsertEnter",
 	dependencies = {
 		-- Sources
+		"hrsh7th/cmp-nvim-lsp-signature-help",
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-path",
@@ -74,32 +75,25 @@ return {
 					end
 				end, { "i", "s" }),
 				["<C-l>"] = cmp.mapping.complete(),
-				["<CR>"] = cmp.mapping.confirm({ select = true }),
+				["<CR>"] = cmp.mapping.confirm({
+					behavior = cmp.ConfirmBehavior.Replace,
+					select = true,
+				}),
 				["<C-e>"] = cmp.mapping.abort(),
 				["<C-n>"] = cmp.mapping.select_next_item(),
 				["<C-p>"] = cmp.mapping.select_prev_item(),
 				["<C-b>"] = cmp.mapping.scroll_docs(-4),
 				["<C-f>"] = cmp.mapping.scroll_docs(4),
 			}),
-			sources = cmp.config.sources({
-				{ name = "nvim_lsp" },
-				{ name = "luasnip" },
-				{ name = "path" },
-				{ name = "nvim_lua" },
-				{ name = "treesitter" },
-				{
-					name = "buffer",
-					option = {
-						get_bufnrs = function()
-							local bufs = {}
-							for _, win in ipairs(vim.api.nvim_list_wins()) do
-								bufs[vim.api.nvim_win_get_buf(win)] = true
-							end
-							return vim.tbl_keys(bufs)
-						end,
-					},
-				},
-			}),
+			sources = {
+				{ name = "nvim_lsp_signature_help", group_index = 1 },
+				{ name = "luasnip", max_item_count = 5, group_index = 1 },
+				{ name = "nvim_lsp", max_item_count = 20, group_index = 1 },
+				{ name = "nvim_lua", group_index = 1 },
+				{ name = "vim-dadbod-completion", group_index = 1 },
+				{ name = "path", group_index = 2 },
+				{ name = "buffer", keyword_length = 2, max_item_count = 5, group_index = 2 },
+			},
 			formatting = {
 				format = lspkind.cmp_format({
 					mode = "symbol_text",
@@ -111,36 +105,6 @@ return {
 						return item
 					end,
 				}),
-			},
-			sorting = {
-				priority_weight = 2,
-				comparators = {
-					require("cmp.config.compare").locality,
-					require("cmp.config.compare").exact,
-					require("cmp.config.compare").score,
-					function(entry1, entry2)
-						local kind_priority = {
-							nvim_lsp = 1000,
-							luasnip = 750,
-							path = 500,
-							nvim_lua = 400,
-							treesitter = 300,
-							buffer = 250,
-							["vim-dadbod-completion"] = 100,
-						}
-						local p1 = kind_priority[entry1.source.name] or 0
-						local p2 = kind_priority[entry2.source.name] or 0
-						if p1 ~= p2 then
-							return p1 > p2
-						end
-					end,
-					require("cmp.config.compare").recently_used,
-					require("cmp.config.compare").offset,
-					require("cmp.config.compare").kind,
-					require("cmp.config.compare").sort_text,
-					require("cmp.config.compare").length,
-					require("cmp.config.compare").order,
-				},
 			},
 			window = {
 				completion = cmp.config.window.bordered(),
