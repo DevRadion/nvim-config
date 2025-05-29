@@ -21,7 +21,7 @@ vim.opt.expandtab = true
 vim.opt.list = false
 
 vim.opt.confirm = true
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.opt.smoothscroll = true
 
 vim.g.autoformat = true
@@ -47,7 +47,6 @@ vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
-vim.opt.list = false
 vim.opt.fillchars = {
 	foldopen = "",
 	foldclose = "",
