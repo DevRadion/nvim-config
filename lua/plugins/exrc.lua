@@ -1,5 +1,5 @@
 return {
 	"jedrzejboczar/exrc.nvim",
-	dependencies = { "neovim/nvim-lspconfig" }, -- (optional)
+	dependencies = { "neovim/nvim-lspconfig" },
 	config = true,
 }
