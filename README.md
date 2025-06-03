@@ -8,7 +8,7 @@ A modern and minimalist Neovim setup tailored for **TypeScript**, **TailwindCSS*
 
 - **Treesitter** syntax highlighting and text objects
 - **Autocompletion** (nvim-cmp) with snippet support
-- **Neo-tree** file explorer
+- **Neo-tree** and **Yazi** file explorers
 - **Rust**, **Zig**, **TypeScript** and **TailwindCSS** ready
 
 ---
