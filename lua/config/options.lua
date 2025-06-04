@@ -6,6 +6,7 @@ vim.opt.cmdheight = 1
 
 vim.opt.showmode = false
 vim.opt.showcmd = true
+vim.opt.spell = true
 
 vim.opt.mouse = "a"
 
