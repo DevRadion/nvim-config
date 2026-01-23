@@ -16,6 +16,10 @@ return {
 					{ "encoding" },
 					{ "fileformat" },
 					{ "filetype" },
+					{
+						"filename",
+						path = 1,
+					},
 				},
 			},
 		})
