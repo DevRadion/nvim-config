@@ -33,21 +33,17 @@ local file_find_command = function()
 end
 
 map("n", "<leader>e", function()
-	require("telescope").extensions.file_browser.file_browser({
-		path = project_root(),
-		cwd = project_root(),
-		select_buffer = true,
-		hidden = true,
+	vim.cmd({
+		cmd = "Neotree",
+		args = { "toggle", "position=float", "dir=" .. project_root() },
 	})
-end, { desc = "Telescope File Explorer (Project)" })
+end, { desc = "Explorer (Project Root)" })
 map("n", "<leader>E", function()
-	require("telescope").extensions.file_browser.file_browser({
-		path = current_file_dir(),
-		cwd = project_root(),
-		select_buffer = true,
-		hidden = true,
+	vim.cmd({
+		cmd = "Neotree",
+		args = { "reveal", "position=float", "dir=" .. current_file_dir() },
 	})
-end, { desc = "Telescope File Explorer (Current Dir)" })
+end, { desc = "Explorer (Current Dir)" })
 map("n", "<leader>ff", function()
 	local root = project_root()
 	local builtin = require("telescope.builtin")

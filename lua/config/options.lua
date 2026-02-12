@@ -61,15 +61,21 @@ vim.opt.inccommand = "split"
 
 vim.opt.cursorline = true
 vim.opt.laststatus = 3
+vim.opt.showtabline = 2
 vim.o.completeopt = "menu,noinsert,popup,fuzzy"
 
 vim.opt.scrolloff = 6
 vim.lsp.inlay_hint.enable(true, nil)
 
 local sign_icon = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+local use_virtual_lines = vim.g.virtual_lines == true
 vim.diagnostic.config({
-	virtual_lines = vim.g.virtual_lines,
-	virtual_text = not vim.g.virtual_lines,
+	severity_sort = true,
+	virtual_lines = use_virtual_lines,
+	virtual_text = use_virtual_lines and false or {
+		spacing = 2,
+		source = "if_many",
+	},
 	signs = {
 		text = {
 			[vim.diagnostic.severity.ERROR] = sign_icon.Error,
