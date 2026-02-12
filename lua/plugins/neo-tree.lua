@@ -12,10 +12,27 @@ return {
 		popup_border_style = "rounded",
 		enable_git_status = true,
 		enable_diagnostics = true,
+		commands = {
+			fast_find = function(state)
+				local cwd = state and state.path or vim.uv.cwd()
+				local builtin = require("telescope.builtin")
+				local has_fd = vim.fn.executable("fd") == 1
+				builtin.find_files({
+					cwd = cwd,
+					hidden = true,
+					no_ignore = false,
+					no_ignore_parent = false,
+					follow = false,
+					find_command = has_fd and { "fd", "--type", "f", "--strip-cwd-prefix", "--hidden", "--exclude", ".git" }
+						or { "rg", "--files", "--hidden", "--glob", "!.git" },
+				})
+			end,
+		},
 		window = {
 			position = "float",
 			mappings = {
 				["l"] = "open",
+				["/"] = "fast_find",
 			},
 		},
 		filesystem = {
@@ -27,7 +44,7 @@ return {
 			use_libuv_file_watcher = true,
 			filtered_items = {
 				hide_dotfiles = false,
-				hide_gitignored = false,
+				hide_gitignored = true,
 			},
 		},
 	},

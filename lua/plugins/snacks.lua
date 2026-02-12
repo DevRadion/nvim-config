@@ -11,7 +11,7 @@ return {
 		input = { enabled = true },
 		lazygit = { enabled = true },
 		picker = {
-			enabled = true,
+			enabled = false,
 		},
 		notifier = { enabled = true },
 		quickfile = { enabled = true },

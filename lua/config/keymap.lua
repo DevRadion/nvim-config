@@ -3,28 +3,85 @@ local map = function(mode, lhs, rhs, opts)
 	vim.keymap.set(mode, lhs, rhs, opts)
 end
 
+local cwd = function()
+	return (vim.uv or vim.loop).cwd()
+end
+
+local project_root = function()
+	local name = vim.api.nvim_buf_get_name(0)
+	local start = name ~= "" and vim.fs.dirname(name) or cwd()
+	return vim.fs.root(start, { ".git" }) or cwd()
+end
+
+local current_file_dir = function()
+	local dir = vim.fn.expand("%:p:h")
+	if dir == "" or vim.fn.isdirectory(dir) == 0 then
+		return cwd()
+	end
+	return dir
+end
+
+local is_git_repo = function(dir)
+	return vim.fn.system({ "git", "-C", dir, "rev-parse", "--is-inside-work-tree" }):match("true") ~= nil
+end
+
+local file_find_command = function()
+	if vim.fn.executable("fd") == 1 then
+		return { "fd", "--type", "f", "--strip-cwd-prefix", "--hidden", "--exclude", ".git" }
+	end
+	return { "rg", "--files", "--hidden", "--glob", "!.git" }
+end
+
 map("n", "<leader>e", function()
-	vim.cmd("Neotree toggle position=float reveal=true")
-end, { desc = "Toggle Neo-tree (Float)" })
+	require("telescope").extensions.file_browser.file_browser({
+		path = project_root(),
+		cwd = project_root(),
+		select_buffer = true,
+		hidden = true,
+	})
+end, { desc = "Telescope File Explorer (Project)" })
 map("n", "<leader>E", function()
-	vim.cmd("Neotree reveal position=float")
-end, { desc = "Reveal File In Neo-tree (Float)" })
+	require("telescope").extensions.file_browser.file_browser({
+		path = current_file_dir(),
+		cwd = project_root(),
+		select_buffer = true,
+		hidden = true,
+	})
+end, { desc = "Telescope File Explorer (Current Dir)" })
 map("n", "<leader>ff", function()
-	Snacks.picker.files()
+	local root = project_root()
+	local builtin = require("telescope.builtin")
+	if is_git_repo(root) then
+		builtin.git_files({
+			cwd = root,
+			show_untracked = true,
+		})
+	else
+		builtin.find_files({
+			cwd = root,
+			hidden = true,
+			no_ignore = false,
+			no_ignore_parent = false,
+			follow = false,
+			find_command = file_find_command(),
+		})
+	end
 end, { desc = "Find Files" })
 map("n", "<leader>fg", function()
-	Snacks.picker.grep()
+	require("telescope.builtin").live_grep({
+		cwd = project_root(),
+	})
 end, { desc = "Live Grep" })
 map("n", "<leader>fG", function()
-	Snacks.picker.grep({
-		cwd = vim.fn.expand("%:p:h"),
+	require("telescope.builtin").live_grep({
+		search_dirs = { current_file_dir() },
 	})
 end, { desc = "Grep In Current File Dir" })
 map("n", "<leader>fb", function()
-	Snacks.picker.buffers()
+	require("telescope.builtin").buffers()
 end, { desc = "Buffers" })
 map("n", "<leader>fr", function()
-	Snacks.picker.resume()
+	require("telescope.builtin").resume()
 end, { desc = "Resume Picker" })
 vim.keymap.set("n", "<esc>", "<cmd>nohlsearch<cr>")
 
