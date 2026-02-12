@@ -21,6 +21,10 @@ return {
 			javascriptreact = { "biome", "prettierd", "prettier", stop_after_first = true },
 			typescriptreact = { "biome", "prettierd", "prettier", stop_after_first = true },
 			json = { "biome", "prettierd", "prettier", stop_after_first = true },
+			rust = { "rustfmt" },
+			c = { "clang_format" },
+			cpp = { "clang_format" },
+			go = { "goimports", "gofumpt" },
 		},
 		default_format_opts = {
 			lsp_format = "fallback",

@@ -6,7 +6,7 @@ vim.opt.cmdheight = 1
 
 vim.opt.showmode = false
 vim.opt.showcmd = false
-vim.opt.spell = false
+vim.opt.spell = true
 
 vim.opt.mouse = "a"
 
@@ -22,7 +22,7 @@ vim.opt.expandtab = true
 vim.opt.list = false
 
 vim.opt.confirm = true
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.opt.smoothscroll = true
 
 vim.g.autoformat = true

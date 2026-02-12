@@ -45,6 +45,9 @@ return {
 				"prismals",
 				"pyright",
 				"zls",
+				"rust_analyzer",
+				"clangd",
+				"gopls",
 			},
 			automatic_enable = false,
 		})
@@ -54,6 +57,11 @@ return {
 				"stylua",
 				"ruff",
 				"biome",
+				"rustfmt",
+				"clang-format",
+				"goimports",
+				"gofumpt",
+				"golangci-lint",
 			},
 		})
 
@@ -97,6 +105,31 @@ return {
 			prismals = {},
 			pyright = {},
 			zls = {},
+			rust_analyzer = {
+				settings = {
+					["rust-analyzer"] = {
+						checkOnSave = true,
+						check = {
+							command = "clippy",
+						},
+					},
+				},
+			},
+			clangd = {
+				cmd = { "clangd", "--background-index", "--clang-tidy", "--completion-style=detailed" },
+			},
+			gopls = {
+				settings = {
+					gopls = {
+						gofumpt = true,
+						analyses = {
+							unusedparams = true,
+							shadow = true,
+						},
+						staticcheck = true,
+					},
+				},
+			},
 		}
 
 		for server_name, server_opts in pairs(servers) do

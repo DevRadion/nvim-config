@@ -5,3 +5,5 @@ WRN 2026-02-12T19:56:27.010 ?.66732    server_start:199: Failed to start server:
 WRN 2026-02-12T19:56:32.226 ?.66733    server_start:199: Failed to start server: operation not permitted: /var/folders/dp/052yp07j7qn4h40n81ltypy80000gn/T/nvim.radionrusnak/F6crAv/nvim.66733.0
 WRN 2026-02-12T19:56:32.226 ?.66735    server_start:199: Failed to start server: operation not permitted: /var/folders/dp/052yp07j7qn4h40n81ltypy80000gn/T/nvim.radionrusnak/p87NXn/nvim.66735.0
 WRN 2026-02-12T20:48:30.188 ?.53386    server_start:199: Failed to start server: operation not permitted: /var/folders/dp/052yp07j7qn4h40n81ltypy80000gn/T/nvim.radionrusnak/Ov58qz/nvim.53386.0
+WRN 2026-02-12T21:37:31.917 ?.7042     server_start:199: Failed to start server: operation not permitted: /var/folders/dp/052yp07j7qn4h40n81ltypy80000gn/T/nvim.radionrusnak/wndpVQ/nvim.7042.0
+WRN 2026-02-12T21:37:46.633 ?.7104     server_start:199: Failed to start server: operation not permitted: /var/folders/dp/052yp07j7qn4h40n81ltypy80000gn/T/nvim.radionrusnak/7oi8Vk/nvim.7104.0

@@ -11,6 +11,7 @@ return {
 			typescriptreact = { "biomejs" },
 			svelte = { "biomejs" },
 			python = { "ruff" },
+			go = { "golangcilint" },
 		}
 
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
