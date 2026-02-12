@@ -24,7 +24,7 @@ local is_not_filetype = function()
 	local exclude_ft = {
 		"neorepl",
 		"gitcommit",
-		"oil",
+		"neo-tree",
 	}
 	for _, v in pairs(exclude_ft) do
 		if ft == v then

@@ -1,53 +1,33 @@
 return {
 	"nvim-neo-tree/neo-tree.nvim",
+	branch = "v3.x",
+	lazy = false,
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+		"nvim-tree/nvim-web-devicons",
 		"MunifTanjim/nui.nvim",
 	},
-	lazy = false, -- neo-tree will lazily load itself
 	opts = {
-		-- For some reason it's don't work on linux
-		-- popup_border_style = "",
-		filesystem = {
-			follow_current_file = { enabled = true, leave_dirs_open = true },
-			use_libuv_file_watcher = true,
-		},
+		close_if_last_window = true,
+		popup_border_style = "rounded",
+		enable_git_status = true,
+		enable_diagnostics = true,
 		window = {
 			position = "float",
 			mappings = {
 				["l"] = "open",
-				["h"] = "close_node",
-				["<space>"] = "none",
-				["Y"] = {
-					function(state)
-						local node = state.tree:get_node()
-						local path = node:get_id()
-						vim.fn.setreg("+", path, "c")
-					end,
-					desc = "Copy Path to Clipboard",
-				},
-				["O"] = {
-					function(state)
-						require("lazy.util").open(state.tree:get_node().path, { system = true })
-					end,
-					desc = "Open with System Application",
-				},
-				["P"] = { "toggle_preview", config = { use_float = false } },
 			},
 		},
-	},
-	default_component_configs = {
-		indent = {
-			with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
-			expander_collapsed = "",
-			expander_expanded = "",
-			expander_highlight = "NeoTreeExpander",
-		},
-		git_status = {
-			symbols = {
-				unstaged = "󰄱",
-				staged = "󰱒",
+		filesystem = {
+			follow_current_file = {
+				enabled = true,
+				leave_dirs_open = false,
+			},
+			hijack_netrw_behavior = "open_default",
+			use_libuv_file_watcher = true,
+			filtered_items = {
+				hide_dotfiles = false,
+				hide_gitignored = false,
 			},
 		},
 	},

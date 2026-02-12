@@ -5,8 +5,8 @@ vim.opt.title = true
 vim.opt.cmdheight = 1
 
 vim.opt.showmode = false
-vim.opt.showcmd = true
-vim.opt.spell = true
+vim.opt.showcmd = false
+vim.opt.spell = false
 
 vim.opt.mouse = "a"
 
@@ -22,7 +22,7 @@ vim.opt.expandtab = true
 vim.opt.list = false
 
 vim.opt.confirm = true
-vim.opt.wrap = true
+vim.opt.wrap = false
 vim.opt.smoothscroll = true
 
 vim.g.autoformat = true
@@ -60,9 +60,10 @@ vim.opt.fillchars = {
 vim.opt.inccommand = "split"
 
 vim.opt.cursorline = true
+vim.opt.laststatus = 3
 vim.o.completeopt = "menu,noinsert,popup,fuzzy"
 
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 6
 vim.lsp.inlay_hint.enable(true, nil)
 
 local sign_icon = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
@@ -80,7 +81,11 @@ vim.diagnostic.config({
 	float = {
 		border = "rounded",
 		format = function(d)
-			return ("%s (%s) [%s]"):format(d.message, d.source, d.code or d.user_data.lsp.code)
+			local code = d.code
+			if not code and d.user_data and d.user_data.lsp then
+				code = d.user_data.lsp.code
+			end
+			return ("%s (%s) [%s]"):format(d.message, d.source or "LSP", code or "no-code")
 		end,
 	},
 	underline = true,
