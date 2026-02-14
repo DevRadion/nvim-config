@@ -1,17 +1,14 @@
 return {
-	"olimorris/onedarkpro.nvim",
+	"ydkulks/cursor-dark.nvim",
 	lazy = false,
 	priority = 1000,
 	config = function()
-		local cursorline_bg = "#0d0f11"
-
-		require("onedarkpro").setup({
-			highlights = {
-				CursorLine = { bg = cursorline_bg },
-				CursorLineNr = { bg = cursorline_bg, extend = true },
-			},
+		-- vim.cmd.colorscheme("cursor-dark-midnight")
+		require("cursor-dark").setup({
+			-- For theme
+			style = "dark",
+			-- For a transparent background
+			-- transparent = true,
 		})
-
-		vim.cmd("colorscheme onedark_dark")
 	end,
 }
