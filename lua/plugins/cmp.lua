@@ -12,12 +12,26 @@ return {
 		"L3MON4D3/LuaSnip",
 		"onsails/lspkind.nvim",
 		"windwp/nvim-autopairs",
+		"roobert/tailwindcss-colorizer-cmp.nvim",
 	},
 	config = function()
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
 		local lspkind = require("lspkind")
 		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+		local tailwindcss_colorizer_cmp = require("tailwindcss-colorizer-cmp")
+		local lspkind_formatter = lspkind.cmp_format({
+			mode = "symbol_text",
+			maxwidth = 60,
+			ellipsis_char = "...",
+			menu = {
+				nvim_lsp = "[LSP]",
+				nvim_lsp_signature_help = "[SIG]",
+				luasnip = "[SNIP]",
+				path = "[PATH]",
+				buffer = "[BUF]",
+			},
+		})
 
 		require("luasnip.loaders.from_vscode").lazy_load()
 		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
@@ -73,18 +87,10 @@ return {
 				{ name = "buffer", keyword_length = 3, max_item_count = 5 },
 			}),
 			formatting = {
-				format = lspkind.cmp_format({
-					mode = "symbol_text",
-					maxwidth = 60,
-					ellipsis_char = "...",
-					menu = {
-						nvim_lsp = "[LSP]",
-						nvim_lsp_signature_help = "[SIG]",
-						luasnip = "[SNIP]",
-						path = "[PATH]",
-						buffer = "[BUF]",
-					},
-				}),
+				format = function(entry, vim_item)
+					vim_item = lspkind_formatter(entry, vim_item)
+					return tailwindcss_colorizer_cmp.formatter(entry, vim_item)
+				end,
 			},
 			window = {
 				completion = cmp.config.window.bordered(),
