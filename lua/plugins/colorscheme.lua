@@ -3,12 +3,11 @@ return {
 	lazy = false,
 	priority = 1000,
 	config = function()
-		-- vim.cmd.colorscheme("cursor-dark-midnight")
 		require("cursor-dark").setup({
-			-- For theme
 			style = "dark",
 			-- For a transparent background
 			-- transparent = true,
 		})
+		require("theme.cursor_zed").apply()
 	end,
 }
