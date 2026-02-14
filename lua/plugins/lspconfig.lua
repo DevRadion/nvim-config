@@ -95,7 +95,40 @@ return {
 					},
 				},
 			},
-			ts_ls = {},
+			ts_ls = {
+				settings = {
+					typescript = {
+						inlayHints = {
+							includeInlayParameterNameHints = "literals",
+							includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+							includeInlayFunctionParameterTypeHints = true,
+							includeInlayVariableTypeHints = false,
+							includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+							includeInlayPropertyDeclarationTypeHints = true,
+							includeInlayFunctionLikeReturnTypeHints = true,
+							includeInlayEnumMemberValueHints = true,
+						},
+						suggest = {
+							completeFunctionCalls = true,
+						},
+					},
+					javascript = {
+						inlayHints = {
+							includeInlayParameterNameHints = "literals",
+							includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+							includeInlayFunctionParameterTypeHints = true,
+							includeInlayVariableTypeHints = false,
+							includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+							includeInlayPropertyDeclarationTypeHints = true,
+							includeInlayFunctionLikeReturnTypeHints = true,
+							includeInlayEnumMemberValueHints = true,
+						},
+						suggest = {
+							completeFunctionCalls = true,
+						},
+					},
+				},
+			},
 			html = {},
 			cssls = {},
 			tailwindcss = {
@@ -120,7 +153,17 @@ return {
 			},
 			svelte = {},
 			graphql = {},
-			emmet_ls = {},
+			emmet_ls = {
+				filetypes = {
+					"html",
+					"css",
+					"scss",
+					"sass",
+					"less",
+					"javascriptreact",
+					"typescriptreact",
+				},
+			},
 			prismals = {},
 			pyright = {},
 			zls = {},

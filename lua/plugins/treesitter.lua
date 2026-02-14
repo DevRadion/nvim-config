@@ -2,20 +2,19 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	event = { "BufReadPre", "BufNewFile" },
 	build = ":TSUpdate",
-	dependencies = {
-		"windwp/nvim-ts-autotag",
-	},
 	config = function()
+		local parser_install_dir = vim.fn.stdpath("data") .. "/treesitter"
+		vim.fn.mkdir(parser_install_dir, "p")
+		vim.opt.runtimepath:append(parser_install_dir)
+
 		local treesitter = require("nvim-treesitter.configs")
 
 		treesitter.setup({
+			parser_install_dir = parser_install_dir,
 			highlight = {
 				enable = true,
 			},
 			indent = { enable = true },
-			autotag = {
-				enable = true,
-			},
 			ensure_installed = {
 				"json",
 				"javascript",
