@@ -30,6 +30,10 @@ return {
 		},
 		window = {
 			position = "float",
+			win_options = {
+				number = false,
+				relativenumber = false,
+			},
 			mappings = {
 				["l"] = "open",
 				["/"] = "fast_find",
