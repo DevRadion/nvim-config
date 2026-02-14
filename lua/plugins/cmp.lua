@@ -18,6 +18,7 @@ return {
 	},
 	config = function()
 		local cmp = require("cmp")
+		local cmp_types = require("cmp.types")
 		local luasnip = require("luasnip")
 		local lspkind = require("lspkind")
 		local compare = require("cmp.config.compare")
@@ -37,9 +38,29 @@ return {
 				buffer = "[BUF]",
 			},
 		})
+		local completion_item_kind = cmp_types.lsp.CompletionItemKind
+		local function prioritize_field_over_snippet(entry1, entry2)
+			local kind1 = entry1:get_kind()
+			local kind2 = entry2:get_kind()
+
+			if kind1 == completion_item_kind.Field and kind2 == completion_item_kind.Snippet then
+				return true
+			end
+			if kind1 == completion_item_kind.Snippet and kind2 == completion_item_kind.Field then
+				return false
+			end
+		end
 
 		require("luasnip.loaders.from_vscode").lazy_load()
-		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+		cmp.event:on(
+			"confirm_done",
+			cmp_autopairs.on_confirm_done({
+				filetypes = {
+					javascriptreact = false,
+					typescriptreact = false,
+				},
+			})
+		)
 
 		cmp.setup({
 			performance = {
@@ -119,6 +140,7 @@ return {
 				comparators = {
 					compare.offset,
 					compare.exact,
+					prioritize_field_over_snippet,
 					under_comparator.under,
 					compare.score,
 					compare.recently_used,

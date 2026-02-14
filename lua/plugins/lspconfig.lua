@@ -105,6 +105,9 @@ return {
 			ts_ls = {
 				settings = {
 					typescript = {
+						preferences = {
+							includeCompletionsWithSnippetText = true,
+						},
 						inlayHints = {
 							includeInlayParameterNameHints = "literals",
 							includeInlayParameterNameHintsWhenArgumentMatchesName = false,
@@ -116,10 +119,13 @@ return {
 							includeInlayEnumMemberValueHints = true,
 						},
 						suggest = {
-							completeFunctionCalls = true,
+							completeFunctionCalls = false,
 						},
 					},
 					javascript = {
+						preferences = {
+							includeCompletionsWithSnippetText = true,
+						},
 						inlayHints = {
 							includeInlayParameterNameHints = "literals",
 							includeInlayParameterNameHintsWhenArgumentMatchesName = false,
@@ -131,7 +137,7 @@ return {
 							includeInlayEnumMemberValueHints = true,
 						},
 						suggest = {
-							completeFunctionCalls = true,
+							completeFunctionCalls = false,
 						},
 					},
 				},
