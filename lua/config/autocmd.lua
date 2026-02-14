@@ -40,3 +40,22 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.spell = true
 	end,
 })
+
+-- Restore line numbers when returning from special plugin windows (e.g. neo-tree)
+vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
+	group = vim.api.nvim_create_augroup("restore_line_numbers", { clear = true }),
+	callback = function(args)
+		local buftype = vim.bo[args.buf].buftype
+		local filetype = vim.bo[args.buf].filetype
+		if buftype ~= "" or filetype == "neo-tree" then
+			return
+		end
+
+		if vim.o.number then
+			vim.wo.number = true
+		end
+		if vim.o.relativenumber then
+			vim.wo.relativenumber = true
+		end
+	end,
+})
