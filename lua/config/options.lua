@@ -65,8 +65,6 @@ vim.opt.showtabline = 2
 vim.o.completeopt = "menu,noinsert,popup,fuzzy"
 
 vim.opt.scrolloff = 6
-vim.lsp.inlay_hint.enable(true, nil)
-
 local sign_icon = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 local use_virtual_lines = vim.g.virtual_lines == true
 vim.diagnostic.config({

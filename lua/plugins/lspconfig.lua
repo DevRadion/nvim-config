@@ -66,7 +66,14 @@ return {
 		})
 
 		local capabilities = cmp_nvim_lsp.default_capabilities()
-		local on_attach = function(_, bufnr)
+		local on_attach = function(client, bufnr)
+			if client.supports_method("textDocument/inlayHint")
+				and vim.api.nvim_buf_is_valid(bufnr)
+				and vim.lsp.buf_is_attached(bufnr, client.id)
+			then
+				vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+			end
+
 			local map = function(mode, lhs, rhs, desc)
 				vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
 			end
