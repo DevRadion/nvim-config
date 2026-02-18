@@ -1,0 +1,46 @@
+{
+  "React Function Component": {
+    "prefix": "rfc",
+    "body": [
+      "import React from \"react\";",
+      "",
+      "const ${1:${TM_FILENAME_BASE}} = () => {",
+      "  return (",
+      "    <div>$0</div>",
+      "  );",
+      "};",
+      "",
+      "export default ${1:${TM_FILENAME_BASE}};"
+    ],
+    "description": "Create a React function component"
+  },
+  "React Arrow Function Export": {
+    "prefix": "rafce",
+    "body": [
+      "import React from \"react\";",
+      "",
+      "export const ${1:${TM_FILENAME_BASE}} = () => {",
+      "  return (",
+      "    <div>$0</div>",
+      "  );",
+      "};"
+    ],
+    "description": "Create a named React arrow function component"
+  },
+  "useState": {
+    "prefix": "usf",
+    "body": [
+      "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = React.useState(${2:null});$0"
+    ],
+    "description": "Create a React useState hook"
+  },
+  "useEffect": {
+    "prefix": "uef",
+    "body": [
+      "React.useEffect(() => {",
+      "  $0",
+      "}, [${1}]);"
+    ],
+    "description": "Create a React useEffect hook"
+  }
+}

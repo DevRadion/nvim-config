@@ -80,6 +80,18 @@ Minimal Neovim config focused on fast editing, LSP, and search.
 | `<C-b>` | Docs up |
 | `<C-f>` | Docs down |
 
+### React Snippets (`javascriptreact` / `typescriptreact`)
+| Prefix | Action |
+| --- | --- |
+| `rfc` | React function component (JSX) |
+| `rafce` | Named React arrow component export (JSX) |
+| `rfct` | Typed React component (TSX) |
+| `usf` | `React.useState(...)` |
+| `ust` | Typed `React.useState<T>(...)` |
+| `uef` | `React.useEffect(...)` |
+| `umf` | `React.useMemo(...)` |
+| `ucf` | `React.useCallback(...)` |
+
 ### Neo-tree (inside tree window)
 | Key | Action |
 | --- | --- |

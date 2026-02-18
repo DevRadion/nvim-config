@@ -26,6 +26,7 @@ return {
 		local cmp_util = require("util.cmp")
 		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 		local tailwindcss_colorizer_cmp = require("tailwindcss-colorizer-cmp")
+		local vscode_loader = require("luasnip.loaders.from_vscode")
 		local lspkind_formatter = lspkind.cmp_format({
 			mode = "symbol_text",
 			maxwidth = 60,
@@ -51,7 +52,10 @@ return {
 			end
 		end
 
-		require("luasnip.loaders.from_vscode").lazy_load()
+		luasnip.filetype_extend("javascriptreact", { "javascript", "html" })
+		luasnip.filetype_extend("typescriptreact", { "typescript", "javascript", "html" })
+		vscode_loader.lazy_load()
+		vscode_loader.lazy_load({ paths = { vim.fn.stdpath("config") .. "/snippets" } })
 		cmp.event:on(
 			"confirm_done",
 			cmp_autopairs.on_confirm_done({

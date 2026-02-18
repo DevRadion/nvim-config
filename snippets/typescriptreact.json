@@ -1,0 +1,46 @@
+{
+  "React TS Component": {
+    "prefix": "rfct",
+    "body": [
+      "import type { FC } from \"react\";",
+      "",
+      "type ${1:${TM_FILENAME_BASE}}Props = {",
+      "  ${2}",
+      "};",
+      "",
+      "const ${1:${TM_FILENAME_BASE}}: FC<${1:${TM_FILENAME_BASE}}Props> = (${3:props}) => {",
+      "  return (",
+      "    <div>$0</div>",
+      "  );",
+      "};",
+      "",
+      "export default ${1:${TM_FILENAME_BASE}};"
+    ],
+    "description": "Create a typed React component"
+  },
+  "useState Generic": {
+    "prefix": "ust",
+    "body": [
+      "const [${1:state}, set${1/(.*)/${1:/capitalize}/}] = React.useState<${2:type}>(${3});$0"
+    ],
+    "description": "Create a typed useState hook"
+  },
+  "useMemo": {
+    "prefix": "umf",
+    "body": [
+      "const ${1:value} = React.useMemo(() => {",
+      "  $0",
+      "}, [${2}]);"
+    ],
+    "description": "Create a React useMemo hook"
+  },
+  "useCallback": {
+    "prefix": "ucf",
+    "body": [
+      "const ${1:callback} = React.useCallback(() => {",
+      "  $0",
+      "}, [${2}]);"
+    ],
+    "description": "Create a React useCallback hook"
+  }
+}

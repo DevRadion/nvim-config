@@ -67,7 +67,8 @@ return {
 
 		local capabilities = cmp_nvim_lsp.default_capabilities()
 		local on_attach = function(client, bufnr)
-			if client.supports_method("textDocument/inlayHint")
+			if
+				client.supports_method("textDocument/inlayHint")
 				and vim.api.nvim_buf_is_valid(bufnr)
 				and vim.lsp.buf_is_attached(bufnr, client.id)
 			then
@@ -150,15 +151,15 @@ return {
 						experimental = {
 							classRegex = {
 								{ "tw`([^`]*)", "tw`([^`]*)" },
-								{ "tw=\"([^\"]*)", "tw=\"([^\"]*)" },
+								{ 'tw="([^"]*)', 'tw="([^"]*)' },
 								{ "tw={'([^'}]*)", "tw={'([^'}]*)" },
 								{ "tw\\.\\w+`([^`]*)", "tw\\.\\w+`([^`]*)" },
 								{ "classNames\\(([^)]*)\\)", "'([^']*)'" },
-								{ "classNames\\(([^)]*)\\)", "\"([^\"]*)\"" },
+								{ "classNames\\(([^)]*)\\)", '"([^"]*)"' },
 								{ "clsx\\(([^)]*)\\)", "'([^']*)'" },
-								{ "clsx\\(([^)]*)\\)", "\"([^\"]*)\"" },
+								{ "clsx\\(([^)]*)\\)", '"([^"]*)"' },
 								{ "cva\\(([^)]*)\\)", "'([^']*)'" },
-								{ "cva\\(([^)]*)\\)", "\"([^\"]*)\"" },
+								{ "cva\\(([^)]*)\\)", '"([^"]*)"' },
 							},
 						},
 					},
@@ -179,7 +180,11 @@ return {
 			},
 			prismals = {},
 			pyright = {},
-			zls = {},
+			zls = {
+				cmd = "/usr/local/bin/zls",
+				filetypes = { "zig" },
+				root_markers = { "build.zig" },
+			},
 			rust_analyzer = {
 				settings = {
 					["rust-analyzer"] = {
@@ -208,10 +213,13 @@ return {
 		}
 
 		for server_name, server_opts in pairs(servers) do
-			vim.lsp.config(server_name, vim.tbl_deep_extend("force", {
-				capabilities = capabilities,
-				on_attach = on_attach,
-			}, server_opts))
+			vim.lsp.config(
+				server_name,
+				vim.tbl_deep_extend("force", {
+					capabilities = capabilities,
+					on_attach = on_attach,
+				}, server_opts)
+			)
 			vim.lsp.enable(server_name)
 		end
 	end,
