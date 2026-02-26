@@ -181,7 +181,7 @@ return {
 			prismals = {},
 			pyright = {},
 			zls = {
-				cmd = "/usr/local/bin/zls",
+				cmd = { "/usr/local/bin/zls" },
 				filetypes = { "zig" },
 				root_markers = { "build.zig" },
 			},
